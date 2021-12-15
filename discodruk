@@ -1,0 +1,67 @@
+import matplotlib.pyplot as plt
+
+input1 = int(input('hier'))
+i = 0
+k = 0
+num = 0
+aankomstlijst = []
+vertreklijst = []
+iedertijdsipaantal = []
+top = []
+eindtop = []
+begintop = []
+for x in range(0, input1):
+    x = input().split(' ')
+    
+    aankomstlijst.append(int(x[1]))
+    vertreklijst.append(int(x[2]))
+    x.clear
+
+aankomstlijst.sort()
+vertreklijst.sort()
+for t in range(0, max(vertreklijst) + 1):
+    if i < len(aankomstlijst) and t == aankomstlijst[i]:
+             
+        num = num + 1
+        while i + 1 < len(aankomstlijst) and aankomstlijst[i + 1]  == t:
+            num = num + 1
+            i = i + 1
+        i = i + 1
+    
+    if  k < len(vertreklijst) and t == vertreklijst[k]:
+        while   k + 1 < len(vertreklijst) and vertreklijst[k + 1] == t:
+            num = num - 1
+            k = k + 1
+        num = num - 1
+        k = k + 1
+    iedertijdsipaantal.append(num) 
+iedertijdsipaantal[-1] = iedertijdsipaantal[-1] + 1
+num = max(iedertijdsipaantal)
+print (num)
+i = 0
+toppen = 0
+while i < len(iedertijdsipaantal):
+    if num == iedertijdsipaantal[i]:
+        begintop.append(i)
+        
+        while i + 1 != len(iedertijdsipaantal) and iedertijdsipaantal[i + 1] == num:
+            i += 1
+        eindtop.append(i)
+        toppen += 1
+    i += 1
+
+k = 0
+while k < len(begintop):    
+    print(f"van {begintop[k]} tot {eindtop[k] + 1}")
+    k+= 1
+print(f"aantal toppen: {toppen}")
+
+x = range(0, len(iedertijdsipaantal))
+
+plt.plot(x,iedertijdsipaantal)
+width = 1
+linestyle = 'dashed'
+plt.title("discograph")
+plt.xlabel("time")
+plt.ylabel("people")
+plt.show()
